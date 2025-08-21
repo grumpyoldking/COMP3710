@@ -11,11 +11,11 @@ def grid(nrows):
     K = k.view(1,-1)
 
     #check if grid is in triangle 
-    valid = K <= N 
+    triangle = K <= N 
 
     #check if k is odd
     N_minus_K = torch.where(valid, N-K, torch.zeros_like(K))
-    odd = ((k & N_minus_K) == 0) & valid 
+    odd = ((k & N_minus_K) == 0) & triangle
 
     return odd
 
