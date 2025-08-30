@@ -7,14 +7,15 @@ def grid(nrows):
     n = torch.arange(nrows, dtype=torch.int32)
     k = torch.arange(nrows, dtype=torch.int32)
     # Create a meshgrid of n and k 
+    # resahpe n into column vector and k into row vector
     N = n.view(-1,1)
     K = k.view(1,-1)
 
-    #check if grid is in triangle 
+    #check if grid is in pascal triangle 
     triangle = K <= N 
 
-    #check if k is odd
-    N_minus_K = torch.where(valid, N-K, torch.zeros_like(K))
+    #check if k is odd using lucas's theorem
+    N_minus_K = torch.where(triangle, N-K, torch.zeros_like(K))
     odd = ((k & N_minus_K) == 0) & triangle
 
     return odd
